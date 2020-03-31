@@ -6,7 +6,9 @@
   "scripts": {
     "docker:run": "docker-compose up -d",
     "docker:stop": "docker-compose down -v",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "web3": "^1.2.6"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "jest": "^25.2.4",
     "@daostack/migration-experimental": "0.1.1-rc.11-v0"
   }
