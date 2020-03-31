@@ -2,10 +2,10 @@ const ethers = require('ethers')
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const DAOFactoryInstance = "0x332280007303d5942dd60A945169b2b303320686"
 const arcVersion = "0.1.1-rc.11"
 
 function getForgeOrgData({
+    DAOFactoryInstance,
     orgName,
     founderAddresses,
     tokenDist,
@@ -32,6 +32,7 @@ function getForgeOrgData({
 }
 
 function getSetSchemesData({
+    DAOFactoryInstance,
     avatar,
     votingMachine,
     joinAndQuitVoteParams,
@@ -83,7 +84,7 @@ function getSetSchemesData({
 
     return [
         avatar,
-        ['JoinAndQuit', 'FundingRequest', 'SchemeFactory'],
+        [ethers.utils.toUtf8Bytes('JoinAndQuit'), ethers.utils.toUtf8Bytes('FundingRequest'), ethers.utils.toUtf8Bytes('SchemeFactory')],
         concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData),schemeFactoryCallData),
         [
             getBytesLength(joinAndQuitCallData),
