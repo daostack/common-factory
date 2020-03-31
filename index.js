@@ -8,7 +8,6 @@ function getForgeOrgData({
     DAOFactoryInstance,
     orgName,
     founderAddresses,
-    tokenDist,
     repDist
 }) {
     let daoTokenABI = require('./abis/DAOToken.json');
@@ -20,7 +19,11 @@ function getForgeOrgData({
         tokenCap: 0,
         DAOFactoryInstance
     });
-    var daoTokenCallData = daoToken.functions.initialize.encode(daoTokenArgs);
+    let daoTokenCallData = daoToken.functions.initialize.encode(daoTokenArgs);
+    let tokenDist = [];
+    for (let i = 0; i < founderAddresses.length; i++) {
+        tokenDist.push(0);
+    }
     return [
         orgName,
         daoTokenCallData,
