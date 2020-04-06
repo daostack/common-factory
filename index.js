@@ -56,10 +56,25 @@ function getSetSchemesData({
     let fundingRequest = new ethers.utils.Interface(fundingRequestABI);
     let schemeFactory = new ethers.utils.Interface(schemeFactoryABI);
 
+    let joinAndQuitParamsHash = joinAndQuitVoteParams;
+    if (joinAndQuitVoteParams === "") {
+        joinAndQuitParamsHash = require('./schemesVoteParams/JoinAndQuitParams.json');
+    }
+
+    let fundingRequestParamsHash = fundingRequestVoteParams;
+    if (fundingRequestVoteParams === "") {
+        fundingRequestParamsHash = require('./schemesVoteParams/FundingRequestParams.json');
+    }
+
+    let schemeFactoryParamsHash = schemeFactoryVoteParams;
+    if (schemeFactoryParams === "") {
+        schemeFactoryParamsHash = require('./schemesVoteParams/SchemeFactoryParams.json');
+    }
+
     const joinAndQuitArgs = Object.values({
         avatar,
         votingMachine,
-        joinAndQuitVoteParams,
+        joinAndQuitParamsHash,
         fundingToken,
         minFeeToJoin,
         memberReputation,
@@ -70,14 +85,14 @@ function getSetSchemesData({
     const fundingRequestArgs = Object.values({
         avatar,
         votingMachine,
-        fundingRequestVoteParams,
+        fundingRequestParamsHash,
         fundingToken,
     });
 
     const schemeFactoryArgs = Object.values({
         avatar,
         votingMachine,
-        schemeFactoryVoteParams,
+        schemeFactoryParamsHash,
         DAOFactoryInstance,
     });
     
