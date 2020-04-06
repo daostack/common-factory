@@ -78,8 +78,8 @@ test('deploy common', async () => {
         DAOFactoryInstance,
         avatar: avatarAddress,
         votingMachine,
-        joinAndQuitVoteParams: "",
-        fundingRequestVoteParams: "",
+        joinAndQuitVoteParams: "0x1000000000000000000000000000000000000000000000000000000000000000",
+        fundingRequestVoteParams: "0x1100000000000000000000000000000000000000000000000000000000000000",
         schemeFactoryVoteParams: "",
         fundingToken: "0x0000000000000000000000000000000000000000",
         minFeeToJoin: 100,
@@ -127,6 +127,6 @@ test('deploy common', async () => {
 
   expect(await schemeFactory.methods.avatar().call()).toBe(avatarAddress);
   expect(await schemeFactory.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await schemeFactory.methods.voteParams().call()).toBe("0x1110000000000000000000000000000000000000000000000000000000000000");
+  expect(await schemeFactory.methods.voteParams().call()).toBe("0x256710e50cd02207aed660bafa287f430bb60db3667c7857b52b2c6d6d84dd82");
   expect(await schemeFactory.methods.daoFactory().call()).toBe(DAOFactoryInstance); 
 }, 500000);
