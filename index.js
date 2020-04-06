@@ -58,17 +58,17 @@ function getSetSchemesData({
 
     let joinAndQuitParamsHash = joinAndQuitVoteParams;
     if (joinAndQuitVoteParams === "") {
-        joinAndQuitParamsHash = require('./schemesVoteParams/JoinAndQuitParams.json');
+        joinAndQuitParamsHash = require('./schemesVoteParams/JoinAndQuitParams.json').paramsHash;
     }
 
     let fundingRequestParamsHash = fundingRequestVoteParams;
     if (fundingRequestVoteParams === "") {
-        fundingRequestParamsHash = require('./schemesVoteParams/FundingRequestParams.json');
+        fundingRequestParamsHash = require('./schemesVoteParams/FundingRequestParams.json').paramsHash;
     }
 
     let schemeFactoryParamsHash = schemeFactoryVoteParams;
-    if (schemeFactoryParams === "") {
-        schemeFactoryParamsHash = require('./schemesVoteParams/SchemeFactoryParams.json');
+    if (schemeFactoryVoteParams === "") {
+        schemeFactoryParamsHash = require('./schemesVoteParams/SchemeFactoryParams.json').paramsHash;
     }
 
     const joinAndQuitArgs = Object.values({
