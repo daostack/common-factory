@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.11";
+const arcVersion = "0.1.1-rc.12";
 
 function getForgeOrgData({
     DAOFactoryInstance,

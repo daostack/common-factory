@@ -32,7 +32,7 @@ test('deploy common', async () => {
     // Test Common Setup 
     const DAOstackMigration = require('@daostack/migration-experimental');
     
-    const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.1-rc.11'].DAOFactoryInstance;
+    const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.1-rc.12'].DAOFactoryInstance;
 
     const daoFactory = new web3.eth.Contract(
       require('../abis/DAOFactory.json'),
