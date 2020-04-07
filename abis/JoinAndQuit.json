@@ -233,6 +233,32 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_proposalId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "int256",
+        "name": "_decision",
+        "type": "int256"
+      }
+    ],
+    "name": "executeProposal",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "fundingGoal",
@@ -322,6 +348,56 @@
     ],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "contract Avatar",
+        "name": "_avatar",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IntVoteInterface",
+        "name": "_votingMachine",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_voteParams",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_fundingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minFeeToJoin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_memberReputation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fundingGoal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fundingGoalDeadLine",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -448,6 +524,68 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_descriptionHash",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_feeAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "proposeToJoin",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "rageQuit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "refund",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_proposalId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "redeemReputation",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "reputation",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [
       {
@@ -552,144 +690,6 @@
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "contract Avatar",
-        "name": "_avatar",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IntVoteInterface",
-        "name": "_votingMachine",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "_voteParams",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "contract IERC20",
-        "name": "_fundingToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_minFeeToJoin",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_memberReputation",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_fundingGoal",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_fundingGoalDeadLine",
-        "type": "uint256"
-      }
-    ],
-    "name": "initialize",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "_proposalId",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "int256",
-        "name": "_decision",
-        "type": "int256"
-      }
-    ],
-    "name": "executeProposal",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_descriptionHash",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_feeAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "proposeToJoin",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "_proposalId",
-        "type": "bytes32"
-      }
-    ],
-    "name": "redeemReputation",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "reputation",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "rageQuit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "refund",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.11";
+const arcVersion = "0.1.1-rc.12";
 
 function getForgeOrgData({
     DAOFactoryInstance,
@@ -56,10 +56,25 @@ function getSetSchemesData({
     let fundingRequest = new ethers.utils.Interface(fundingRequestABI);
     let schemeFactory = new ethers.utils.Interface(schemeFactoryABI);
 
+    let joinAndQuitParamsHash = joinAndQuitVoteParams;
+    if (joinAndQuitVoteParams === "") {
+        joinAndQuitParamsHash = require('./schemesVoteParams/JoinAndQuitParams.json').paramsHash;
+    }
+
+    let fundingRequestParamsHash = fundingRequestVoteParams;
+    if (fundingRequestVoteParams === "") {
+        fundingRequestParamsHash = require('./schemesVoteParams/FundingRequestParams.json').paramsHash;
+    }
+
+    let schemeFactoryParamsHash = schemeFactoryVoteParams;
+    if (schemeFactoryVoteParams === "") {
+        schemeFactoryParamsHash = require('./schemesVoteParams/SchemeFactoryParams.json').paramsHash;
+    }
+
     const joinAndQuitArgs = Object.values({
         avatar,
         votingMachine,
-        joinAndQuitVoteParams,
+        joinAndQuitParamsHash,
         fundingToken,
         minFeeToJoin,
         memberReputation,
@@ -70,14 +85,14 @@ function getSetSchemesData({
     const fundingRequestArgs = Object.values({
         avatar,
         votingMachine,
-        fundingRequestVoteParams,
+        fundingRequestParamsHash,
         fundingToken,
     });
 
     const schemeFactoryArgs = Object.values({
         avatar,
         votingMachine,
-        schemeFactoryVoteParams,
+        schemeFactoryParamsHash,
         DAOFactoryInstance,
     });
     

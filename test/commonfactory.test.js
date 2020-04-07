@@ -32,7 +32,7 @@ test('deploy common', async () => {
     // Test Common Setup 
     const DAOstackMigration = require('@daostack/migration-experimental');
     
-    const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.1-rc.11'].DAOFactoryInstance;
+    const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.1-rc.12'].DAOFactoryInstance;
 
     const daoFactory = new web3.eth.Contract(
       require('../abis/DAOFactory.json'),
@@ -56,13 +56,13 @@ test('deploy common', async () => {
     let reputationAddress = newOrg._reputation;
 
     const avatar = new web3.eth.Contract(
-      require('@daostack/migration-experimental/contracts/0.1.1-rc.11/Avatar.json').abi,
+      require('@daostack/migration-experimental/contracts/0.1.1-rc.12/Avatar.json').abi,
       avatarAddress,
       opts
     );
 
     const reputation = new web3.eth.Contract(
-      require('@daostack/migration-experimental/contracts/0.1.1-rc.11/Reputation.json').abi,
+      require('@daostack/migration-experimental/contracts/0.1.1-rc.12/Reputation.json').abi,
       reputationAddress,
       opts
     );
@@ -71,7 +71,7 @@ test('deploy common', async () => {
     expect(await reputation.methods.balanceOf(web3.eth.accounts.wallet[0].address).call()).toBe('100');
     expect(await reputation.methods.totalSupply().call()).toBe('100');
     
-    const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.11'].GenesisProtocol;
+    const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.12'].GenesisProtocol;
     const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
     const setSchemes = await daoFactory.methods.setSchemes(
       ...getSetSchemesData({
@@ -80,7 +80,7 @@ test('deploy common', async () => {
         votingMachine,
         joinAndQuitVoteParams: "0x1000000000000000000000000000000000000000000000000000000000000000",
         fundingRequestVoteParams: "0x1100000000000000000000000000000000000000000000000000000000000000",
-        schemeFactoryVoteParams: "0x1110000000000000000000000000000000000000000000000000000000000000",
+        schemeFactoryVoteParams: "",
         fundingToken: "0x0000000000000000000000000000000000000000",
         minFeeToJoin: 100,
         memberReputation: 100,
@@ -127,6 +127,6 @@ test('deploy common', async () => {
 
   expect(await schemeFactory.methods.avatar().call()).toBe(avatarAddress);
   expect(await schemeFactory.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await schemeFactory.methods.voteParams().call()).toBe("0x1110000000000000000000000000000000000000000000000000000000000000");
+  expect(await schemeFactory.methods.voteParams().call()).toBe("0x256710e50cd02207aed660bafa287f430bb60db3667c7857b52b2c6d6d84dd82");
   expect(await schemeFactory.methods.daoFactory().call()).toBe(DAOFactoryInstance); 
 }, 500000);
