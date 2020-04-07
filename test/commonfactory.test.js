@@ -56,13 +56,13 @@ test('deploy common', async () => {
     let reputationAddress = newOrg._reputation;
 
     const avatar = new web3.eth.Contract(
-      require('@daostack/migration-experimental/contracts/0.1.1-rc.11/Avatar.json').abi,
+      require('@daostack/migration-experimental/contracts/0.1.1-rc.12/Avatar.json').abi,
       avatarAddress,
       opts
     );
 
     const reputation = new web3.eth.Contract(
-      require('@daostack/migration-experimental/contracts/0.1.1-rc.11/Reputation.json').abi,
+      require('@daostack/migration-experimental/contracts/0.1.1-rc.12/Reputation.json').abi,
       reputationAddress,
       opts
     );
@@ -71,7 +71,7 @@ test('deploy common', async () => {
     expect(await reputation.methods.balanceOf(web3.eth.accounts.wallet[0].address).call()).toBe('100');
     expect(await reputation.methods.totalSupply().call()).toBe('100');
     
-    const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.11'].GenesisProtocol;
+    const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.12'].GenesisProtocol;
     const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
     const setSchemes = await daoFactory.methods.setSchemes(
       ...getSetSchemesData({
