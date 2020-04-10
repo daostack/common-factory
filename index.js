@@ -102,7 +102,7 @@ function getSetSchemesData({
 
     return [
         avatar,
-        [ethers.utils.toUtf8Bytes('JoinAndQuit'), ethers.utils.toUtf8Bytes('FundingRequest'), ethers.utils.toUtf8Bytes('SchemeFactory')],
+        [ethers.utils.formatBytes32String('JoinAndQuit'), ethers.utils.formatBytes32String('FundingRequest'), ethers.utils.formatBytes32String('SchemeFactory')],
         concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData),schemeFactoryCallData),
         [
             getBytesLength(joinAndQuitCallData),
