@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.12";
+const arcVersion = "0.1.1-rc.13";
 
 function getForgeOrgData({
     DAOFactoryInstance,
@@ -38,9 +38,6 @@ function getSetSchemesData({
     DAOFactoryInstance,
     avatar,
     votingMachine,
-    joinAndQuitVoteParams,
-    fundingRequestVoteParams,
-    schemeFactoryVoteParams,
     fundingToken,
     minFeeToJoin,
     memberReputation,
@@ -56,25 +53,28 @@ function getSetSchemesData({
     let fundingRequest = new ethers.utils.Interface(fundingRequestABI);
     let schemeFactory = new ethers.utils.Interface(schemeFactoryABI);
 
-    let joinAndQuitParamsHash = joinAndQuitVoteParams;
-    if (joinAndQuitVoteParams === "") {
-        joinAndQuitParamsHash = require('./schemesVoteParams/JoinAndQuitParams.json').paramsHash;
-    }
-
-    let fundingRequestParamsHash = fundingRequestVoteParams;
-    if (fundingRequestVoteParams === "") {
-        fundingRequestParamsHash = require('./schemesVoteParams/FundingRequestParams.json').paramsHash;
-    }
-
-    let schemeFactoryParamsHash = schemeFactoryVoteParams;
-    if (schemeFactoryVoteParams === "") {
-        schemeFactoryParamsHash = require('./schemesVoteParams/SchemeFactoryParams.json').paramsHash;
-    }
+    let joinAndQuitParams = require('./schemesVoteParams/JoinAndQuitParams.json');
+    let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
+    let schemeFactoryParams = require('./schemesVoteParams/SchemeFactoryParams.json');
 
     const joinAndQuitArgs = Object.values({
         avatar,
         votingMachine,
-        joinAndQuitParamsHash,
+        votingParams: [
+            joinAndQuitParams.queuedVoteRequiredPercentage,
+            joinAndQuitParams.queuedVotePeriodLimit,
+            joinAndQuitParams.boostedVotePeriodLimit,
+            joinAndQuitParams.preBoostedVotePeriodLimit,
+            joinAndQuitParams.thresholdConst,
+            joinAndQuitParams.quietEndingPeriod,
+            joinAndQuitParams.proposingRepReward,
+            joinAndQuitParams.votersReputationLossRatio,
+            joinAndQuitParams.minimumDaoBounty,
+            joinAndQuitParams.daoBountyConst,
+            joinAndQuitParams.activationTime
+        ],
+        voteOnBehalf: joinAndQuitParams.voteOnBehalf,
+        joinAndQuitParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
         fundingToken,
         minFeeToJoin,
         memberReputation,
@@ -85,14 +85,42 @@ function getSetSchemesData({
     const fundingRequestArgs = Object.values({
         avatar,
         votingMachine,
-        fundingRequestParamsHash,
+        votingParams: [
+            fundingRequestParams.queuedVoteRequiredPercentage,
+            fundingRequestParams.queuedVotePeriodLimit,
+            fundingRequestParams.boostedVotePeriodLimit,
+            fundingRequestParams.preBoostedVotePeriodLimit,
+            fundingRequestParams.thresholdConst,
+            fundingRequestParams.quietEndingPeriod,
+            fundingRequestParams.proposingRepReward,
+            fundingRequestParams.votersReputationLossRatio,
+            fundingRequestParams.minimumDaoBounty,
+            fundingRequestParams.daoBountyConst,
+            fundingRequestParams.activationTime
+        ],
+        voteOnBehalf: fundingRequestParams.voteOnBehalf,
+        fundingRequestParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
         fundingToken,
     });
 
     const schemeFactoryArgs = Object.values({
         avatar,
         votingMachine,
-        schemeFactoryParamsHash,
+        votingParams: [
+            schemeFactoryParams.queuedVoteRequiredPercentage,
+            schemeFactoryParams.queuedVotePeriodLimit,
+            schemeFactoryParams.boostedVotePeriodLimit,
+            schemeFactoryParams.preBoostedVotePeriodLimit,
+            schemeFactoryParams.thresholdConst,
+            schemeFactoryParams.quietEndingPeriod,
+            schemeFactoryParams.proposingRepReward,
+            schemeFactoryParams.votersReputationLossRatio,
+            schemeFactoryParams.minimumDaoBounty,
+            schemeFactoryParams.daoBountyConst,
+            schemeFactoryParams.activationTime
+        ],
+        voteOnBehalf: schemeFactoryParams.voteOnBehalf,
+        schemeFactoryParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
         DAOFactoryInstance,
     });
     

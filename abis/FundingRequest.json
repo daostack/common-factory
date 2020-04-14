@@ -270,8 +270,18 @@
         "type": "address"
       },
       {
+        "internalType": "uint256[11]",
+        "name": "_votingParams",
+        "type": "uint256[11]"
+      },
+      {
+        "internalType": "address",
+        "name": "_voteOnBehalf",
+        "type": "address"
+      },
+      {
         "internalType": "bytes32",
-        "name": "_voteParams",
+        "name": "_voteParamsHash",
         "type": "bytes32"
       },
       {
@@ -495,7 +505,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "voteParams",
+    "name": "voteParamsHash",
     "outputs": [
       {
         "internalType": "bytes32",
