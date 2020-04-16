@@ -14,7 +14,6 @@ const forgeOrg = await daoFactory.methods.forgeOrg(
         DAOFactoryInstance,
         orgName,
         founderAddresses: [web3.eth.accounts.wallet[0].address],
-        tokenDist: [0],
         repDist: [100]
       })
     ).send();
