@@ -109,7 +109,7 @@ test('deploy common', async () => {
 
   expect(await joinAndQuit.methods.avatar().call()).toBe(avatarAddress);
   expect(await joinAndQuit.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe("0x1eee6e80136c410fb664c4743c060cebcdbc741a787eac661b8ab9d228e9eeed");
+  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
   expect(await joinAndQuit.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000");
   expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
   expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
@@ -118,12 +118,12 @@ test('deploy common', async () => {
   
   expect(await fundingRequest.methods.avatar().call()).toBe(avatarAddress);
   expect(await fundingRequest.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await fundingRequest.methods.voteParamsHash().call()).toBe("0x1eee6e80136c410fb664c4743c060cebcdbc741a787eac661b8ab9d228e9eeed");
+  expect(await fundingRequest.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
   expect(await fundingRequest.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000"); 
 
 
   expect(await schemeFactory.methods.avatar().call()).toBe(avatarAddress);
   expect(await schemeFactory.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await schemeFactory.methods.voteParamsHash().call()).toBe("0x1eee6e80136c410fb664c4743c060cebcdbc741a787eac661b8ab9d228e9eeed");
+  expect(await schemeFactory.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
   expect(await schemeFactory.methods.daoFactory().call()).toBe(DAOFactoryInstance); 
 }, 500000);
