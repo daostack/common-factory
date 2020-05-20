@@ -9,6 +9,6 @@
   "quietEndingPeriod": 86400, // 1 day
   "thresholdConst": 1200, // ?? what is a good setting here?
   "voteOnBehalf": "0x0000000000000000000000000000000000000000",
-  "votersReputationLossRatio": 10,
+  "votersReputationLossRatio": 0,
   "activationTime": 0
 }
