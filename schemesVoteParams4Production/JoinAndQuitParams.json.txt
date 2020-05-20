@@ -3,7 +3,7 @@
   "daoBountyConst": 1, // absolutely minimal dowstake (would be nice if we could turn this off)
   "minimumDaoBounty": 1, // (the contract does not allow 0)
   "queuedVotePeriodLimit": 1209600, // proposals expire in 2 weeks
-  "queuedVoteRequiredPercentage": 51,
+  "queuedVoteRequiredPercentage": 50,
   "preBoostedVotePeriodLimit": 0, // no preboosted state at all (can we do this?)
   "proposingRepReward": 0, // no rep flow
   "quietEndingPeriod": 14400, // 4 hours
