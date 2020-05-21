@@ -1,6 +1,6 @@
 version: '3'
 services:
   ganache:
-    image: 'daostack/migration-experimental:0.1.1-rc.13-v1'
+    image: 'daostack/migration-experimental:0.1.1-rc.20-v1'
     ports:
       - '8545:8545'

@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.13";
+const arcVersion = "0.1.1-rc.20";
 
 function getForgeOrgData({
     DAOFactoryInstance,
@@ -43,7 +43,8 @@ function getSetSchemesData({
     memberReputation,
     goal,
     deadline,
-    metaData
+    metaData,
+    rageQuitEnable
 }) {
     let joinAndQuitABI = require('./abis/JoinAndQuit.json');
     let fundingRequestABI = require('./abis/FundingRequest.json');
@@ -56,6 +57,10 @@ function getSetSchemesData({
     let joinAndQuitParams = require('./schemesVoteParams/JoinAndQuitParams.json');
     let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
     let schemeFactoryParams = require('./schemesVoteParams/SchemeFactoryParams.json');
+
+    if (!rageQuitEnable) {
+        rageQuitEnable = true;
+    }
 
     const joinAndQuitArgs = Object.values({
         avatar,
@@ -79,7 +84,8 @@ function getSetSchemesData({
         minFeeToJoin,
         memberReputation,
         goal,
-        deadline
+        deadline,
+        rageQuitEnable
     });
 
     const fundingRequestArgs = Object.values({
