@@ -43,8 +43,8 @@ function getSetSchemesData({
     memberReputation,
     goal,
     deadline,
-    rageQuitEnabled,
-    metaData
+    metaData,
+    rageQuitEnabled
 }) {
     let joinAndQuitABI = require('./abis/JoinAndQuit.json');
     let fundingRequestABI = require('./abis/FundingRequest.json');
@@ -60,8 +60,8 @@ function getSetSchemesData({
     let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
     let schemeFactoryParams = require('./schemesVoteParams/SchemeFactoryParams.json');
 
-    if (!rageQuitEnable) {
-        rageQuitEnable = true;
+    if (rageQuitEnabled === undefined) {
+        rageQuitEnabled = true;
     }
 
     const joinAndQuitArgs = Object.values({
