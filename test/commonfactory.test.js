@@ -83,6 +83,7 @@ test('deploy common', async () => {
         memberReputation: 100,
         goal: 1000,
         deadline,
+        rageQuitEnabled: true,
         metaData: 'metadata'
     })
   ).send();
