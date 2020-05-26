@@ -367,27 +367,17 @@
     "constant": true,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
       }
     ],
-    "name": "proposalsInfo",
+    "name": "proposalsBlockNumber",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "blockNumber",
+        "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract Avatar",
-        "name": "avatar",
-        "type": "address"
       }
     ],
     "payable": false,
