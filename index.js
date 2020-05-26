@@ -60,6 +60,10 @@ function getSetSchemesData({
     let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
     let schemeFactoryParams = require('./schemesVoteParams/SchemeFactoryParams.json');
 
+    if (!rageQuitEnable) {
+        rageQuitEnable = true;
+    }
+
     const joinAndQuitArgs = Object.values({
         avatar,
         votingMachine,
