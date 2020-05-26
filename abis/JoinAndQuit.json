@@ -131,6 +131,31 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_avatar",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_beneficiary",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_refund",
+        "type": "uint256"
+      }
+    ],
+    "name": "Refund",
+    "type": "event"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "FUNDED_BEFORE_DEADLINE_KEY",
@@ -276,7 +301,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "fundingGoalDeadLine",
+    "name": "fundingGoalDeadline",
     "outputs": [
       {
         "internalType": "uint256",
@@ -314,6 +339,11 @@
     ],
     "name": "fundings",
     "outputs": [
+      {
+        "internalType": "bool",
+        "name": "candidate",
+        "type": "bool"
+      },
       {
         "internalType": "bool",
         "name": "rageQuit",
@@ -400,8 +430,13 @@
       },
       {
         "internalType": "uint256",
-        "name": "_fundingGoalDeadLine",
+        "name": "_fundingGoalDeadline",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_rageQuitEnable",
+        "type": "bool"
       }
     ],
     "name": "initialize",
@@ -506,27 +541,17 @@
     "constant": true,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
       }
     ],
-    "name": "proposalsInfo",
+    "name": "proposalsBlockNumber",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "blockNumber",
+        "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "contract Avatar",
-        "name": "avatar",
-        "type": "address"
       }
     ],
     "payable": false,
@@ -566,12 +591,27 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "refund",
+        "name": "refundAmount",
         "type": "uint256"
       }
     ],
     "payable": false,
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rageQuitEnable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -588,6 +628,21 @@
       {
         "internalType": "uint256",
         "name": "reputation",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "refund",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "refundAmount",
         "type": "uint256"
       }
     ],
@@ -619,6 +674,15 @@
     ],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "setFundingGoalReachedFlag",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

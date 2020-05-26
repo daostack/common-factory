@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.13";
+const arcVersion = "0.1.1-rc.21";
 
 function getForgeOrgData({
     DAOFactoryInstance,
@@ -43,15 +43,18 @@ function getSetSchemesData({
     memberReputation,
     goal,
     deadline,
+    rageQuitEnabled,
     metaData
 }) {
     let joinAndQuitABI = require('./abis/JoinAndQuit.json');
     let fundingRequestABI = require('./abis/FundingRequest.json');
     let schemeFactoryABI = require('./abis/SchemeFactory.json');
+    let dictatorABI = require('./abis/Dictator.json');
 
     let joinAndQuit = new ethers.utils.Interface(joinAndQuitABI);
     let fundingRequest = new ethers.utils.Interface(fundingRequestABI);
     let schemeFactory = new ethers.utils.Interface(schemeFactoryABI);
+    let dictator = new ethers.utils.Interface(dictatorABI);
 
     let joinAndQuitParams = require('./schemesVoteParams/JoinAndQuitParams.json');
     let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
@@ -79,7 +82,8 @@ function getSetSchemesData({
         minFeeToJoin,
         memberReputation,
         goal,
-        deadline
+        deadline,
+        rageQuitEnabled
     });
 
     const fundingRequestArgs = Object.values({
@@ -123,21 +127,33 @@ function getSetSchemesData({
         schemeFactoryParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
         DAOFactoryInstance,
     });
+
+    const dictatorArgs = Object.values({
+        avatar,
+        owner: '0xbBb06cD354D7f4e67677f090eCc3f6E5916E2447'
+    });
     
     var joinAndQuitCallData = joinAndQuit.functions.initialize.encode(joinAndQuitArgs);
     var fundingRequestCallData = fundingRequest.functions.initialize.encode(fundingRequestArgs);
     var schemeFactoryCallData = schemeFactory.functions.initialize.encode(schemeFactoryArgs);
+    var dictatorCallData = dictator.functions.initialize.encode(dictatorArgs);
 
     return [
         avatar,
-        [ethers.utils.formatBytes32String('JoinAndQuit'), ethers.utils.formatBytes32String('FundingRequest'), ethers.utils.formatBytes32String('SchemeFactory')],
-        concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData),schemeFactoryCallData),
+        [
+            ethers.utils.formatBytes32String('JoinAndQuit'),
+            ethers.utils.formatBytes32String('FundingRequest'),
+            ethers.utils.formatBytes32String('SchemeFactory'),
+            ethers.utils.formatBytes32String('Dictator')
+        ],
+        concatBytes(concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData),
         [
             getBytesLength(joinAndQuitCallData),
             getBytesLength(fundingRequestCallData),
-            getBytesLength(schemeFactoryCallData)
+            getBytesLength(schemeFactoryCallData),
+            getBytesLength(dictatorCallData)
         ],
-        ['0x00000000', '0x00000000', '0x0000001F'],
+        ['0x00000000', '0x00000000', '0x0000001F', '0x0000001F'],
         metaData
     ];
 }
