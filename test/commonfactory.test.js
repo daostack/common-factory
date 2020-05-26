@@ -32,7 +32,7 @@ test('deploy common', async () => {
     // Test Common Setup 
     const DAOstackMigration = require('@daostack/migration-experimental');
     
-    const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.1-rc.13'].DAOFactoryInstance;
+    const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.1-rc.20'].DAOFactoryInstance;
 
     const daoFactory = new web3.eth.Contract(
       require('../abis/DAOFactory.json'),
@@ -56,13 +56,13 @@ test('deploy common', async () => {
     let reputationAddress = newOrg._reputation;
 
     const avatar = new web3.eth.Contract(
-      require('@daostack/migration-experimental/contracts/0.1.1-rc.13/Avatar.json').abi,
+      require('@daostack/migration-experimental/contracts/0.1.1-rc.20/Avatar.json').abi,
       avatarAddress,
       opts
     );
 
     const reputation = new web3.eth.Contract(
-      require('@daostack/migration-experimental/contracts/0.1.1-rc.13/Reputation.json').abi,
+      require('@daostack/migration-experimental/contracts/0.1.1-rc.20/Reputation.json').abi,
       reputationAddress,
       opts
     );
@@ -71,7 +71,7 @@ test('deploy common', async () => {
     expect(await reputation.methods.balanceOf(web3.eth.accounts.wallet[0].address).call()).toBe('100');
     expect(await reputation.methods.totalSupply().call()).toBe('100');
     
-    const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.13'].GenesisProtocol;
+    const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.20'].GenesisProtocol;
     const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
     const setSchemes = await daoFactory.methods.setSchemes(
       ...getSetSchemesData({
@@ -114,7 +114,7 @@ test('deploy common', async () => {
   expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
   expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
   expect(await joinAndQuit.methods.fundingGoal().call()).toBe("1000");
-  expect(await joinAndQuit.methods.fundingGoalDeadLine().call()).toBe(deadline.toString());
+  expect(await joinAndQuit.methods.fundingGoalDeadline().call()).toBe(deadline.toString());
   
   expect(await fundingRequest.methods.avatar().call()).toBe(avatarAddress);
   expect(await fundingRequest.methods.votingMachine().call()).toBe(votingMachine);
