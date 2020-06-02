@@ -73,6 +73,7 @@ test('deploy common', async () => {
     
     const votingMachine = DAOstackMigration.migration('private').package['0.1.1-rc.21'].GenesisProtocol;
     const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
+
     const setSchemes = await daoFactory.methods.setSchemes(
       ...getSetSchemesData({
         DAOFactoryInstance,
@@ -113,6 +114,29 @@ test('deploy common', async () => {
     opts
   );
 
+  const genesisProtocol = new web3.eth.Contract(
+    require('../abis/GenesisProtocol.json'),
+    votingMachine,
+    opts
+  );
+  let fundingRequestParams = require('../schemesVoteParams/FundingRequestParams.json');
+  let fundingRequestParamsHash = await genesisProtocol.methods.getParametersHash(
+    [
+      fundingRequestParams.queuedVoteRequiredPercentage,
+      fundingRequestParams.queuedVotePeriodLimit,
+      fundingRequestParams.boostedVotePeriodLimit,
+      fundingRequestParams.preBoostedVotePeriodLimit,
+      fundingRequestParams.thresholdConst,
+      fundingRequestParams.quietEndingPeriod,
+      web3.utils.toWei(fundingRequestParams.proposingRepReward.toString()),
+      fundingRequestParams.votersReputationLossRatio,
+      web3.utils.toWei(fundingRequestParams.minimumDaoBounty.toString()),
+      fundingRequestParams.daoBountyConst,
+      deadline
+    ],
+    fundingRequestParams.voteOnBehalf,
+  ).call();
+
   expect(await joinAndQuit.methods.avatar().call()).toBe(avatarAddress);
   expect(await joinAndQuit.methods.votingMachine().call()).toBe(votingMachine);
   expect(await joinAndQuit.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
@@ -120,11 +144,11 @@ test('deploy common', async () => {
   expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
   expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
   expect(await joinAndQuit.methods.fundingGoal().call()).toBe("1000");
-  expect(await joinAndQuit.methods.fundingGoalDeadline().call()).toBe(deadline.toString());
+  expect(await joinAndQuit.methods.fundingGoalDeadline().call()).toBe('0');
   
   expect(await fundingRequest.methods.avatar().call()).toBe(avatarAddress);
   expect(await fundingRequest.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await fundingRequest.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
+  expect(await fundingRequest.methods.voteParamsHash().call()).toBe(fundingRequestParamsHash);
   expect(await fundingRequest.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000"); 
 
 

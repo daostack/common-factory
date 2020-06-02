@@ -86,7 +86,7 @@ function getSetSchemesData({
         minFeeToJoin,
         memberReputation,
         goal,
-        deadline,
+        deadline: '0',
         rageQuitEnabled
     });
 
@@ -104,7 +104,7 @@ function getSetSchemesData({
             fundingRequestParams.votersReputationLossRatio,
             ethers.utils.parseEther(fundingRequestParams.minimumDaoBounty.toString()),
             fundingRequestParams.daoBountyConst,
-            fundingRequestParams.activationTime
+            deadline
         ],
         voteOnBehalf: fundingRequestParams.voteOnBehalf,
         fundingRequestParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
