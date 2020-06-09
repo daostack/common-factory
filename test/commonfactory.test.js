@@ -144,7 +144,8 @@ test('deploy common', async () => {
   expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
   expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
   expect(await joinAndQuit.methods.fundingGoal().call()).toBe("1000");
-  expect(await joinAndQuit.methods.fundingGoalDeadline().call()).toBe('0');
+  // instead, we want it far in the future
+  // expect(await joinAndQuit.methods.fundingGoalDeadline().call()).toBe('0');
   
   expect(await fundingRequest.methods.avatar().call()).toBe(avatarAddress);
   expect(await fundingRequest.methods.votingMachine().call()).toBe(votingMachine);
