@@ -41,8 +41,8 @@ function getSetSchemesData({
     fundingToken,
     minFeeToJoin,
     memberReputation,
-    goal,
-    deadline,
+    goal, // funding goal to be reached
+    deadline, // the date when the funding request will be activated
     metaData,
     rageQuitEnabled
 }) {
@@ -86,7 +86,9 @@ function getSetSchemesData({
         minFeeToJoin,
         memberReputation,
         goal,
-        deadline: '0',
+        // set the funding gaol to 0 and the funding gaol far to the future: this will allow us to call
+        // setfundinggaoldeadline() and start creating funding requests as soon as the fundingRequest scheme is active
+        deadline: new Date(2222, 1, 1).getTime() / 1000, 
         rageQuitEnabled
     });
 
@@ -104,7 +106,7 @@ function getSetSchemesData({
             fundingRequestParams.votersReputationLossRatio,
             ethers.utils.parseEther(fundingRequestParams.minimumDaoBounty.toString()),
             fundingRequestParams.daoBountyConst,
-            deadline
+            deadline // this is the activationDate for the funding request
         ],
         voteOnBehalf: fundingRequestParams.voteOnBehalf,
         fundingRequestParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
