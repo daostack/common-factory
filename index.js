@@ -4,6 +4,8 @@ const ethers = require('ethers');
 // TODO: Edit constants/ Make them function params
 const arcVersion = "0.1.1-rc.23";
 
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
+
 function getForgeOrgData({
     DAOFactoryInstance,
     orgName,
@@ -64,7 +66,7 @@ function getForgeOrgData({
     }
 
     const joinAndQuitArgs = Object.values({
-        avatar: '0x0000000000000000000000000000000000000000',
+        avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
             joinAndQuitParams.queuedVoteRequiredPercentage,
@@ -92,7 +94,7 @@ function getForgeOrgData({
     });
 
     const fundingRequestArgs = Object.values({
-        avatar: '0x0000000000000000000000000000000000000000',
+        avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
             fundingRequestParams.queuedVoteRequiredPercentage,
@@ -113,7 +115,7 @@ function getForgeOrgData({
     });
 
     const schemeFactoryArgs = Object.values({
-        avatar: '0x0000000000000000000000000000000000000000',
+        avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
             schemeFactoryParams.queuedVoteRequiredPercentage,
@@ -134,7 +136,7 @@ function getForgeOrgData({
     });
 
     const dictatorArgs = Object.values({
-        avatar: '0x0000000000000000000000000000000000000000',
+        avatar: NULL_ADDRESS,
         owner: '0xbBb06cD354D7f4e67677f090eCc3f6E5916E2447'
     });
     
