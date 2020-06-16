@@ -113,7 +113,7 @@ test('deploy common', async () => {
     votingMachine,
     opts
   );
-  let joinAndQuitParams = require('../schemesVoteParams/JoinAndQuit.json');
+  let joinAndQuitParams = require('../schemesVoteParams/JoinAndQuitParams.json');
   let joinAndQuitParamsHash = await genesisProtocol.methods.getParametersHash(
     [
       joinAndQuitParams.queuedVoteRequiredPercentage,
