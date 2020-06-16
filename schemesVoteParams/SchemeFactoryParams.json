@@ -10,6 +10,5 @@
     "thresholdConst": 2000,
     "voteOnBehalf": "0x0000000000000000000000000000000000000000",
     "votersReputationLossRatio": 1,
-    "activationTime": 0,
-    "paramsHash": "0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2"
+    "activationTime": 0
   }

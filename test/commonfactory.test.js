@@ -113,6 +113,24 @@ test('deploy common', async () => {
     votingMachine,
     opts
   );
+  let joinAndQuitParams = require('../schemesVoteParams/JoinAndQuit.json');
+  let joinAndQuitParamsHash = await genesisProtocol.methods.getParametersHash(
+    [
+      joinAndQuitParams.queuedVoteRequiredPercentage,
+      joinAndQuitParams.queuedVotePeriodLimit,
+      joinAndQuitParams.boostedVotePeriodLimit,
+      joinAndQuitParams.preBoostedVotePeriodLimit,
+      joinAndQuitParams.thresholdConst,
+      joinAndQuitParams.quietEndingPeriod,
+      web3.utils.toWei(joinAndQuitParams.proposingRepReward.toString()),
+      joinAndQuitParams.votersReputationLossRatio,
+      web3.utils.toWei(joinAndQuitParams.minimumDaoBounty.toString()),
+      joinAndQuitParams.daoBountyConst,
+      joinAndQuitParams.activationTime
+    ],
+    joinAndQuitParams.voteOnBehalf,
+  ).call();
+
   let fundingRequestParams = require('../schemesVoteParams/FundingRequestParams.json');
   let fundingRequestParamsHash = await genesisProtocol.methods.getParametersHash(
     [
@@ -131,9 +149,27 @@ test('deploy common', async () => {
     fundingRequestParams.voteOnBehalf,
   ).call();
 
+  let schemeFactoryParams = require('../schemesVoteParams/SchemeFactoryParams.json');
+  let schemeFactoryParamsHash = await genesisProtocol.methods.getParametersHash(
+    [
+      schemeFactoryParams.queuedVoteRequiredPercentage,
+      schemeFactoryParams.queuedVotePeriodLimit,
+      schemeFactoryParams.boostedVotePeriodLimit,
+      schemeFactoryParams.preBoostedVotePeriodLimit,
+      schemeFactoryParams.thresholdConst,
+      schemeFactoryParams.quietEndingPeriod,
+      web3.utils.toWei(schemeFactoryParams.proposingRepReward.toString()),
+      schemeFactoryParams.votersReputationLossRatio,
+      web3.utils.toWei(schemeFactoryParams.minimumDaoBounty.toString()),
+      schemeFactoryParams.daoBountyConst,
+      schemeFactoryParams.activationTime
+    ],
+    schemeFactoryParams.voteOnBehalf,
+  ).call();
+
   expect(await joinAndQuit.methods.avatar().call()).toBe(avatarAddress);
   expect(await joinAndQuit.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
+  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe(joinAndQuitParamsHash);
   expect(await joinAndQuit.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000");
   expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
   expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
@@ -149,7 +185,7 @@ test('deploy common', async () => {
 
   expect(await schemeFactory.methods.avatar().call()).toBe(avatarAddress);
   expect(await schemeFactory.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await schemeFactory.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
+  expect(await schemeFactory.methods.voteParamsHash().call()).toBe(schemeFactoryParamsHash);
   expect(await schemeFactory.methods.daoFactory().call()).toBe(DAOFactoryInstance); 
 
   expect(await dictator.methods.avatar().call()).toBe(avatarAddress);
