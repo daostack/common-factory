@@ -6,7 +6,7 @@
     "queuedVoteRequiredPercentage": 50,
     "preBoostedVotePeriodLimit": 6000,
     "proposingRepReward": 0,
-    "quietEndingPeriod": 600,
+    "quietEndingPeriod": 300,
     "thresholdConst": 2000,
     "voteOnBehalf": "0x0000000000000000000000000000000000000000",
     "votersReputationLossRatio": 0,
