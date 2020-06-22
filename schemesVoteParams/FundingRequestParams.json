@@ -1,14 +1,14 @@
 {
-    "boostedVotePeriodLimit": 600,
+    "boostedVotePeriodLimit": 300000,
     "daoBountyConst": 10,
     "minimumDaoBounty": 100,
     "queuedVotePeriodLimit": 1800,
     "queuedVoteRequiredPercentage": 50,
-    "preBoostedVotePeriodLimit": 600,
-    "proposingRepReward": 5,
+    "preBoostedVotePeriodLimit": 6000,
+    "proposingRepReward": 0,
     "quietEndingPeriod": 300,
     "thresholdConst": 2000,
     "voteOnBehalf": "0x0000000000000000000000000000000000000000",
-    "votersReputationLossRatio": 1,
+    "votersReputationLossRatio": 0,
     "activationTime": 0
   }
