@@ -139,7 +139,7 @@ test('deploy common', async () => {
 
   expect(await joinAndQuit.methods.avatar().call()).toBe(avatarAddress);
   expect(await joinAndQuit.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
+  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe("0x2bf4842dc20c34a202f5b8ef76a1cb6e9e2e797b232164894fd3291f61b26b53");
   expect(await joinAndQuit.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000");
   expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
   expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
@@ -155,7 +155,7 @@ test('deploy common', async () => {
 
   expect(await schemeFactory.methods.avatar().call()).toBe(avatarAddress);
   expect(await schemeFactory.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await schemeFactory.methods.voteParamsHash().call()).toBe("0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2");
+  expect(await schemeFactory.methods.voteParamsHash().call()).toBe("0xb044d44a2bf9657289fa23a5908703e742437d638035e8a8a7b3a24d76cb450d");
   expect(await schemeFactory.methods.daoFactory().call()).toBe(DAOFactoryInstance); 
 
   expect(await dictator.methods.avatar().call()).toBe(avatarAddress);
