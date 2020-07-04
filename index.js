@@ -2,13 +2,23 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.21";
+const arcVersion = "0.1.1-rc.23";
+
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 function getForgeOrgData({
     DAOFactoryInstance,
     orgName,
     founderAddresses,
-    repDist
+    repDist,
+    votingMachine,
+    fundingToken,
+    minFeeToJoin,
+    memberReputation,
+    goal,
+    deadline,
+    metaData,
+    rageQuitEnabled
 }) {
     let daoTokenABI = require('./abis/DAOToken.json');
 
@@ -24,28 +34,19 @@ function getForgeOrgData({
     for (let i = 0; i < founderAddresses.length; i++) {
         tokenDist.push(0);
     }
-    return [
-        orgName,
-        daoTokenCallData,
-        founderAddresses,
-        tokenDist,
-        repDist,
-        [0, 0, getArcVersionNumber(arcVersion)]
-    ];
-}
 
-function getSetSchemesData({
-    DAOFactoryInstance,
-    avatar,
-    votingMachine,
-    fundingToken,
-    minFeeToJoin,
-    memberReputation,
-    goal, // funding goal to be reached
-    deadline, // the date when the funding request will be activated
-    metaData,
-    rageQuitEnabled
-}) {
+    let encodedForgeOrgParams = (new ethers.utils.AbiCoder()).encode(
+        ['string', 'bytes', 'address[]', 'uint256[]', 'uint256[]', 'uint64[3]'],
+        [
+            orgName,
+            daoTokenCallData,
+            founderAddresses,
+            tokenDist,
+            repDist,
+            [0, 0, getArcVersionNumber(arcVersion)]
+        ]
+    );
+
     let joinAndQuitABI = require('./abis/JoinAndQuit.json');
     let fundingRequestABI = require('./abis/FundingRequest.json');
     let schemeFactoryABI = require('./abis/SchemeFactory.json');
@@ -65,7 +66,7 @@ function getSetSchemesData({
     }
 
     const joinAndQuitArgs = Object.values({
-        avatar,
+        avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
             joinAndQuitParams.queuedVoteRequiredPercentage,
@@ -93,7 +94,7 @@ function getSetSchemesData({
     });
 
     const fundingRequestArgs = Object.values({
-        avatar,
+        avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
             fundingRequestParams.queuedVoteRequiredPercentage,
@@ -114,7 +115,7 @@ function getSetSchemesData({
     });
 
     const schemeFactoryArgs = Object.values({
-        avatar,
+        avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
             schemeFactoryParams.queuedVoteRequiredPercentage,
@@ -135,7 +136,7 @@ function getSetSchemesData({
     });
 
     const dictatorArgs = Object.values({
-        avatar,
+        avatar: NULL_ADDRESS,
         owner: '0xbBb06cD354D7f4e67677f090eCc3f6E5916E2447'
     });
     
@@ -144,23 +145,30 @@ function getSetSchemesData({
     var schemeFactoryCallData = schemeFactory.functions.initialize.encode(schemeFactoryArgs);
     var dictatorCallData = dictator.functions.initialize.encode(dictatorArgs);
 
+    var encodedSetSchemesParams = (new ethers.utils.AbiCoder()).encode(
+        ['bytes32[]', 'bytes', 'uint256[]', 'bytes4[]', 'string'],
+        [
+            [
+                ethers.utils.formatBytes32String('JoinAndQuit'),
+                ethers.utils.formatBytes32String('FundingRequest'),
+                ethers.utils.formatBytes32String('SchemeFactory'),
+                ethers.utils.formatBytes32String('Dictator')
+            ],
+            concatBytes(concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData),
+            [
+                getBytesLength(joinAndQuitCallData),
+                getBytesLength(fundingRequestCallData),
+                getBytesLength(schemeFactoryCallData),
+                getBytesLength(dictatorCallData)
+            ],
+            ['0x00000000', '0x00000000', '0x0000001F', '0x0000001F'],
+            metaData
+        ]
+    );
+
     return [
-        avatar,
-        [
-            ethers.utils.formatBytes32String('JoinAndQuit'),
-            ethers.utils.formatBytes32String('FundingRequest'),
-            ethers.utils.formatBytes32String('SchemeFactory'),
-            ethers.utils.formatBytes32String('Dictator')
-        ],
-        concatBytes(concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData),
-        [
-            getBytesLength(joinAndQuitCallData),
-            getBytesLength(fundingRequestCallData),
-            getBytesLength(schemeFactoryCallData),
-            getBytesLength(dictatorCallData)
-        ],
-        ['0x00000000', '0x00000000', '0x0000001F', '0x0000001F'],
-        metaData
+        encodedForgeOrgParams,
+        encodedSetSchemesParams
     ];
 }
 
@@ -179,6 +187,5 @@ function getArcVersionNumber(arcVersion) {
 }
 
 module.exports = {
-    getForgeOrgData,
-    getSetSchemesData
+    getForgeOrgData
 };
