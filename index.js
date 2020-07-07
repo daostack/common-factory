@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.1-rc.23";
+const arcVersion = "0.1.2-rc.0";
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
