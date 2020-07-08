@@ -32,7 +32,7 @@ test('deploy common', async () => {
   // Test Common Setup 
   const DAOstackMigration = require('@daostack/migration-experimental');
   
-  const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.2-rc.0'].DAOFactoryInstance;
+  const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.2-rc.2'].DAOFactoryInstance;
 
   const daoFactory = new web3.eth.Contract(
     require('../abis/DAOFactory.json'),
@@ -42,7 +42,7 @@ test('deploy common', async () => {
   
   const orgName = 'My Common';
 
-  const votingMachine = DAOstackMigration.migration('private').package['0.1.2-rc.0'].GenesisProtocol;
+  const votingMachine = DAOstackMigration.migration('private').package['0.1.2-rc.2'].GenesisProtocol;
   const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
 
   const forgeOrg = await daoFactory.methods.forgeOrg(
@@ -67,13 +67,13 @@ test('deploy common', async () => {
   let reputationAddress = newOrg._reputation;
 
   const avatar = new web3.eth.Contract(
-    require('@daostack/migration-experimental/contracts/0.1.2-rc.0/Avatar.json').abi,
+    require('@daostack/migration-experimental/contracts/0.1.2-rc.2/Avatar.json').abi,
     avatarAddress,
     opts
   );
 
   const reputation = new web3.eth.Contract(
-    require('@daostack/migration-experimental/contracts/0.1.2-rc.0/Reputation.json').abi,
+    require('@daostack/migration-experimental/contracts/0.1.2-rc.2/Reputation.json').abi,
     reputationAddress,
     opts
   );
