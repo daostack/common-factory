@@ -94,7 +94,6 @@
     "type": "event"
   },
   {
-    "constant": true,
     "inputs": [],
     "name": "PACKAGE_NAME",
     "outputs": [
@@ -104,12 +103,10 @@
         "type": "string"
       }
     ],
-    "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
     "inputs": [
       {
         "internalType": "contract Avatar",
@@ -140,12 +137,10 @@
         "type": "bool"
       }
     ],
-    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "constant": true,
     "inputs": [],
     "name": "app",
     "outputs": [
@@ -155,12 +150,10 @@
         "type": "address"
       }
     ],
-    "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
     "inputs": [
       {
         "internalType": "uint64[3]",
@@ -191,42 +184,20 @@
         "type": "address"
       }
     ],
-    "payable": true,
     "stateMutability": "payable",
     "type": "function"
   },
   {
-    "constant": false,
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_orgName",
-        "type": "string"
-      },
-      {
         "internalType": "bytes",
-        "name": "_tokenInitData",
+        "name": "_encodedForgeOrgParams",
         "type": "bytes"
       },
       {
-        "internalType": "address[]",
-        "name": "_founders",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_foundersTokenAmount",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_foundersReputationAmount",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint64[3]",
-        "name": "_version",
-        "type": "uint64[3]"
+        "internalType": "bytes",
+        "name": "_encodedSetSchemesParams",
+        "type": "bytes"
       }
     ],
     "name": "forgeOrg",
@@ -237,12 +208,10 @@
         "type": "address"
       }
     ],
-    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "constant": true,
     "inputs": [
       {
         "internalType": "uint64[3]",
@@ -263,12 +232,10 @@
         "type": "address"
       }
     ],
-    "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": true,
     "inputs": [
       {
         "internalType": "uint64[3]",
@@ -284,12 +251,10 @@
         "type": "uint64[3]"
       }
     ],
-    "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -299,12 +264,10 @@
     ],
     "name": "initialize",
     "outputs": [],
-    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "constant": true,
     "inputs": [
       {
         "internalType": "address",
@@ -320,12 +283,10 @@
         "type": "address"
       }
     ],
-    "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
     "inputs": [
       {
         "internalType": "contract Avatar",
@@ -333,34 +294,13 @@
         "type": "address"
       },
       {
-        "internalType": "bytes32[]",
-        "name": "_schemesNames",
-        "type": "bytes32[]"
-      },
-      {
         "internalType": "bytes",
-        "name": "_schemesData",
+        "name": "_encodedSetSchemesParams",
         "type": "bytes"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_schemesInitilizeDataLens",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "bytes4[]",
-        "name": "_permissions",
-        "type": "bytes4[]"
-      },
-      {
-        "internalType": "string",
-        "name": "_metaData",
-        "type": "string"
       }
     ],
     "name": "setSchemes",
     "outputs": [],
-    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   }
