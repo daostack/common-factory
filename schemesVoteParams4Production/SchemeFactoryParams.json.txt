@@ -1,15 +1,14 @@
 {
-    "boostedVotePeriodLimit": 600,
-    "daoBountyConst": 10,
-    "minimumDaoBounty": 100,
-    "queuedVotePeriodLimit": 1800,
-    "queuedVoteRequiredPercentage": 50,
-    "preBoostedVotePeriodLimit": 600,
-    "proposingRepReward": 5,
-    "quietEndingPeriod": 300,
-    "thresholdConst": 2000,
-    "voteOnBehalf": "0x0000000000000000000000000000000000000000",
-    "votersReputationLossRatio": 1,
-    "activationTime": 0,
-    "paramsHash": "0x62f2af6100a7374bcea52cbc2b654eb4dce056d52ea41eda08aea55e1a871ee2"
-  }
+  "boostedVotePeriodLimit": 518400, // is 6 days
+  "daoBountyConst": 1, // absolutely minimal dowstake (would be nice if we could turn this off)
+  "minimumDaoBounty": 1, // (the contract does not allow 0)
+  "queuedVotePeriodLimit": 100800, // the proposal expires in 4 weeks
+  "queuedVoteRequiredPercentage": 50,
+  "preBoostedVotePeriodLimit": 3600, 
+  "proposingRepReward": 0, // no rep flow
+  "quietEndingPeriod": 86400, // 1 day
+  "thresholdConst": 1200, // ?? what is a good setting here?
+  "voteOnBehalf": "0x0000000000000000000000000000000000000000",
+  "votersReputationLossRatio": 0,
+  "activationTime": 0
+}

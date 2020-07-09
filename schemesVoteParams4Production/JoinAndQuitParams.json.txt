@@ -4,7 +4,7 @@
   "minimumDaoBounty": 1, // (the contract does not allow 0)
   "queuedVotePeriodLimit": 1209600, // proposals expire in 2 weeks
   "queuedVoteRequiredPercentage": 50,
-  "preBoostedVotePeriodLimit": 0, // no preboosted state at all (can we do this?)
+  "preBoostedVotePeriodLimit": 3600, 
   "proposingRepReward": 0, // no rep flow
   "quietEndingPeriod": 14400, // 4 hours
   "thresholdConst": 1200, // ?? what is a good setting here?
