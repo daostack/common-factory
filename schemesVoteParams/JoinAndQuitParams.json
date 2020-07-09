@@ -1,15 +1,14 @@
-{
-    "boostedVotePeriodLimit": 300000,
-    "daoBountyConst": 10,
-    "minimumDaoBounty": 100,
-    "queuedVotePeriodLimit": 1800,
-    "queuedVoteRequiredPercentage": 50,
-    "preBoostedVotePeriodLimit": 6000,
-    "proposingRepReward": 0,
-    "quietEndingPeriod": 300,
-    "thresholdConst": 2000,
-    "voteOnBehalf": "0x0000000000000000000000000000000000000000",
-    "votersReputationLossRatio": 0,
-    "activationTime": 0,
-    "paramsHash": "0x2bf4842dc20c34a202f5b8ef76a1cb6e9e2e797b232164894fd3291f61b26b53"
-  }
+{ 
+  "boostedVotePeriodLimit": 72000, 
+  "daoBountyConst": 1,
+  "minimumDaoBounty": 1,
+  "queuedVotePeriodLimit": 1209600,
+  "queuedVoteRequiredPercentage": 50,
+  "preBoostedVotePeriodLimit": 3600, 
+  "proposingRepReward": 0,
+  "quietEndingPeriod": 14400,
+  "thresholdConst": 1200,
+  "voteOnBehalf": "0x0000000000000000000000000000000000000000",
+  "votersReputationLossRatio": 0,
+  "activationTime": 0
+}
