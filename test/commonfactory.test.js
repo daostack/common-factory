@@ -24,7 +24,7 @@ test('deploy common', async () => {
   }
   let opts = {
     from: web3.eth.accounts.wallet[0].address,
-    gas: 6000000,
+    gas: 8000000,
     gasPrice: 10
   };
   // End Web3 setup
@@ -105,6 +105,12 @@ test('deploy common', async () => {
   const dictator = new web3.eth.Contract(
     require('../abis/Dictator.json'),
     schemesEvents[3].returnValues._scheme,
+    opts
+  );
+
+  const reputationAdmin = new web3.eth.Contract(
+    require('../abis/ReputationAdmin.json'),
+    schemesEvents[4].returnValues._scheme,
     opts
   );
 
@@ -190,4 +196,11 @@ test('deploy common', async () => {
 
   expect(await dictator.methods.avatar().call()).toBe(avatarAddress);
   expect(await dictator.methods.owner().call()).toBe("0xbBb06cD354D7f4e67677f090eCc3f6E5916E2447");
+
+  expect(await reputationAdmin.methods.avatar().call()).toBe(avatarAddress);
+  expect(await reputationAdmin.methods.activationStartTime().call()).toBe('0');
+  expect(await reputationAdmin.methods.activationEndTime().call()).toBe((new Date(2222, 1, 1).getTime() / 1000) + '');
+  expect(await reputationAdmin.methods.repRewardLeft().call()).toBe('0');
+  expect(await reputationAdmin.methods.limitRepReward().call()).toBe('0');
+  expect(await reputationAdmin.methods.owner().call()).toBe("0xCF8d68F810Cb8E3E228A7F31A61bEf0C1700A7d5");
 }, 500000);

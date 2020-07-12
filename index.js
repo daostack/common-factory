@@ -51,11 +51,13 @@ function getForgeOrgData({
     let fundingRequestABI = require('./abis/FundingRequest.json');
     let schemeFactoryABI = require('./abis/SchemeFactory.json');
     let dictatorABI = require('./abis/Dictator.json');
+    let reputationAdminABI = require('./abis/ReputationAdmin.json');
 
     let joinAndQuit = new ethers.utils.Interface(joinAndQuitABI);
     let fundingRequest = new ethers.utils.Interface(fundingRequestABI);
     let schemeFactory = new ethers.utils.Interface(schemeFactoryABI);
     let dictator = new ethers.utils.Interface(dictatorABI);
+    let reputationAdmin = new ethers.utils.Interface(reputationAdminABI);
 
     let joinAndQuitParams = require('./schemesVoteParams/JoinAndQuitParams.json');
     let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
@@ -139,11 +141,20 @@ function getForgeOrgData({
         avatar: NULL_ADDRESS,
         owner: '0xbBb06cD354D7f4e67677f090eCc3f6E5916E2447'
     });
+
+    const reputationAdminArgs = Object.values({
+        avatar: NULL_ADDRESS,
+        activationStartTime: 0,
+        activationEndTime: new Date(2222, 1, 1).getTime() / 1000,
+        maxRepReward: 0,
+        owner: '0xCF8d68F810Cb8E3E228A7F31A61bEf0C1700A7d5'
+    });
     
     var joinAndQuitCallData = joinAndQuit.functions.initialize.encode(joinAndQuitArgs);
     var fundingRequestCallData = fundingRequest.functions.initialize.encode(fundingRequestArgs);
     var schemeFactoryCallData = schemeFactory.functions.initialize.encode(schemeFactoryArgs);
     var dictatorCallData = dictator.functions.initialize.encode(dictatorArgs);
+    var reputationAdminCallData = reputationAdmin.functions.initialize.encode(reputationAdminArgs);
 
     var encodedSetSchemesParams = (new ethers.utils.AbiCoder()).encode(
         ['bytes32[]', 'bytes', 'uint256[]', 'bytes4[]', 'string'],
@@ -152,16 +163,18 @@ function getForgeOrgData({
                 ethers.utils.formatBytes32String('JoinAndQuit'),
                 ethers.utils.formatBytes32String('FundingRequest'),
                 ethers.utils.formatBytes32String('SchemeFactory'),
-                ethers.utils.formatBytes32String('Dictator')
+                ethers.utils.formatBytes32String('Dictator'),
+                ethers.utils.formatBytes32String('ReputationAdmin')
             ],
-            concatBytes(concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData),
+            concatBytes(concatBytes(concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData), reputationAdminCallData),
             [
                 getBytesLength(joinAndQuitCallData),
                 getBytesLength(fundingRequestCallData),
                 getBytesLength(schemeFactoryCallData),
-                getBytesLength(dictatorCallData)
+                getBytesLength(dictatorCallData),
+                getBytesLength(reputationAdminCallData)
             ],
-            ['0x00000000', '0x00000000', '0x0000001F', '0x0000001F'],
+            ['0x00000000', '0x00000000', '0x0000001F', '0x0000001F', '0x0000001F'],
             metaData
         ]
     );
