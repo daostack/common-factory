@@ -27,7 +27,7 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "jest": "^25.2.4",
-    "@daostack/migration-experimental": "0.1.2-rc.0-v1",
+    "@daostack/migration-experimental": "0.1.2-rc.2-v0",
     "web3": "^1.2.6"
   }
 }

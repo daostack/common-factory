@@ -24,7 +24,7 @@ test('deploy common', async () => {
   }
   let opts = {
     from: web3.eth.accounts.wallet[0].address,
-    gas: 6000000,
+    gas: 8000000,
     gasPrice: 10
   };
   // End Web3 setup
@@ -32,7 +32,7 @@ test('deploy common', async () => {
   // Test Common Setup 
   const DAOstackMigration = require('@daostack/migration-experimental');
   
-  const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.2-rc.0'].DAOFactoryInstance;
+  const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.2-rc.2'].DAOFactoryInstance;
 
   const daoFactory = new web3.eth.Contract(
     require('../abis/DAOFactory.json'),
@@ -42,7 +42,7 @@ test('deploy common', async () => {
   
   const orgName = 'My Common';
 
-  const votingMachine = DAOstackMigration.migration('private').package['0.1.2-rc.0'].GenesisProtocol;
+  const votingMachine = DAOstackMigration.migration('private').package['0.1.2-rc.2'].GenesisProtocol;
   const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
 
   const forgeOrg = await daoFactory.methods.forgeOrg(
@@ -67,13 +67,13 @@ test('deploy common', async () => {
   let reputationAddress = newOrg._reputation;
 
   const avatar = new web3.eth.Contract(
-    require('@daostack/migration-experimental/contracts/0.1.2-rc.0/Avatar.json').abi,
+    require('@daostack/migration-experimental/contracts/0.1.2-rc.2/Avatar.json').abi,
     avatarAddress,
     opts
   );
 
   const reputation = new web3.eth.Contract(
-    require('@daostack/migration-experimental/contracts/0.1.2-rc.0/Reputation.json').abi,
+    require('@daostack/migration-experimental/contracts/0.1.2-rc.2/Reputation.json').abi,
     reputationAddress,
     opts
   );
@@ -105,6 +105,12 @@ test('deploy common', async () => {
   const dictator = new web3.eth.Contract(
     require('../abis/Dictator.json'),
     schemesEvents[3].returnValues._scheme,
+    opts
+  );
+
+  const reputationAdmin = new web3.eth.Contract(
+    require('../abis/ReputationAdmin.json'),
+    schemesEvents[4].returnValues._scheme,
     opts
   );
 
@@ -190,4 +196,11 @@ test('deploy common', async () => {
 
   expect(await dictator.methods.avatar().call()).toBe(avatarAddress);
   expect(await dictator.methods.owner().call()).toBe("0xbBb06cD354D7f4e67677f090eCc3f6E5916E2447");
+
+  expect(await reputationAdmin.methods.avatar().call()).toBe(avatarAddress);
+  expect(await reputationAdmin.methods.activationStartTime().call()).toBe('0');
+  expect(await reputationAdmin.methods.activationEndTime().call()).toBe((new Date(2222, 1, 1).getTime() / 1000) + '');
+  expect(await reputationAdmin.methods.repRewardLeft().call()).toBe('0');
+  expect(await reputationAdmin.methods.limitRepReward().call()).toBe('0');
+  expect(await reputationAdmin.methods.owner().call()).toBe("0xCF8d68F810Cb8E3E228A7F31A61bEf0C1700A7d5");
 }, 500000);
