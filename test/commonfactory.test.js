@@ -32,7 +32,7 @@ test('deploy common', async () => {
   // Test Common Setup 
   const DAOstackMigration = require('@daostack/migration-experimental');
   
-  const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.2-rc.2'].DAOFactoryInstance;
+  const DAOFactoryInstance = DAOstackMigration.migration('private').package['0.1.2-rc.6'].DAOFactoryInstance;
 
   const daoFactory = new web3.eth.Contract(
     require('../abis/DAOFactory.json'),
@@ -42,9 +42,8 @@ test('deploy common', async () => {
   
   const orgName = 'My Common';
 
-  const votingMachine = DAOstackMigration.migration('private').package['0.1.2-rc.2'].GenesisProtocol;
+  const votingMachine = DAOstackMigration.migration('private').package['0.1.2-rc.6'].GenesisProtocol;
   const deadline = (await web3.eth.getBlock("latest")).timestamp + 3000;
-
   const forgeOrg = await daoFactory.methods.forgeOrg(
     ...getForgeOrgData({
       DAOFactoryInstance,
@@ -67,13 +66,13 @@ test('deploy common', async () => {
   let reputationAddress = newOrg._reputation;
 
   const avatar = new web3.eth.Contract(
-    require('@daostack/migration-experimental/contracts/0.1.2-rc.2/Avatar.json').abi,
+    require('@daostack/migration-experimental/contracts/0.1.2-rc.6/Avatar.json').abi,
     avatarAddress,
     opts
   );
 
   const reputation = new web3.eth.Contract(
-    require('@daostack/migration-experimental/contracts/0.1.2-rc.2/Reputation.json').abi,
+    require('@daostack/migration-experimental/contracts/0.1.2-rc.6/Reputation.json').abi,
     reputationAddress,
     opts
   );
@@ -84,8 +83,8 @@ test('deploy common', async () => {
 
   let schemesEvents = forgeOrg.events.SchemeInstance;
 
-  const joinAndQuit = new web3.eth.Contract(
-    require('../abis/JoinAndQuit.json'),
+  const join = new web3.eth.Contract(
+    require('../abis/Join.json'),
     schemesEvents[0].returnValues._scheme,
     opts
   );
@@ -119,22 +118,22 @@ test('deploy common', async () => {
     votingMachine,
     opts
   );
-  let joinAndQuitParams = require('../schemesVoteParams/JoinAndQuitParams.json');
-  let joinAndQuitParamsHash = await genesisProtocol.methods.getParametersHash(
+  let joinParams = require('../schemesVoteParams/JoinParams.json');
+  let joinParamsHash = await genesisProtocol.methods.getParametersHash(
     [
-      joinAndQuitParams.queuedVoteRequiredPercentage,
-      joinAndQuitParams.queuedVotePeriodLimit,
-      joinAndQuitParams.boostedVotePeriodLimit,
-      joinAndQuitParams.preBoostedVotePeriodLimit,
-      joinAndQuitParams.thresholdConst,
-      joinAndQuitParams.quietEndingPeriod,
-      web3.utils.toWei(joinAndQuitParams.proposingRepReward.toString()),
-      joinAndQuitParams.votersReputationLossRatio,
-      web3.utils.toWei(joinAndQuitParams.minimumDaoBounty.toString()),
-      joinAndQuitParams.daoBountyConst,
-      joinAndQuitParams.activationTime
+      joinParams.queuedVoteRequiredPercentage,
+      joinParams.queuedVotePeriodLimit,
+      joinParams.boostedVotePeriodLimit,
+      joinParams.preBoostedVotePeriodLimit,
+      joinParams.thresholdConst,
+      joinParams.quietEndingPeriod,
+      joinParams.proposingRepReward.toString(),
+      joinParams.votersReputationLossRatio,
+      joinParams.minimumDaoBounty.toString(),
+      joinParams.daoBountyConst,
+      joinParams.activationTime
     ],
-    joinAndQuitParams.voteOnBehalf,
+    joinParams.voteOnBehalf,
   ).call();
 
   let fundingRequestParams = require('../schemesVoteParams/FundingRequestParams.json');
@@ -146,9 +145,9 @@ test('deploy common', async () => {
       fundingRequestParams.preBoostedVotePeriodLimit,
       fundingRequestParams.thresholdConst,
       fundingRequestParams.quietEndingPeriod,
-      web3.utils.toWei(fundingRequestParams.proposingRepReward.toString()),
+      fundingRequestParams.proposingRepReward.toString(),
       fundingRequestParams.votersReputationLossRatio,
-      web3.utils.toWei(fundingRequestParams.minimumDaoBounty.toString()),
+      fundingRequestParams.minimumDaoBounty.toString(),
       fundingRequestParams.daoBountyConst,
       deadline
     ],
@@ -164,24 +163,24 @@ test('deploy common', async () => {
       schemeFactoryParams.preBoostedVotePeriodLimit,
       schemeFactoryParams.thresholdConst,
       schemeFactoryParams.quietEndingPeriod,
-      web3.utils.toWei(schemeFactoryParams.proposingRepReward.toString()),
+      schemeFactoryParams.proposingRepReward.toString(),
       schemeFactoryParams.votersReputationLossRatio,
-      web3.utils.toWei(schemeFactoryParams.minimumDaoBounty.toString()),
+      schemeFactoryParams.minimumDaoBounty.toString(),
       schemeFactoryParams.daoBountyConst,
       schemeFactoryParams.activationTime
     ],
     schemeFactoryParams.voteOnBehalf,
   ).call();
 
-  expect(await joinAndQuit.methods.avatar().call()).toBe(avatarAddress);
-  expect(await joinAndQuit.methods.votingMachine().call()).toBe(votingMachine);
-  expect(await joinAndQuit.methods.voteParamsHash().call()).toBe(joinAndQuitParamsHash);
-  expect(await joinAndQuit.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000");
-  expect(await joinAndQuit.methods.minFeeToJoin().call()).toBe("100");
-  expect(await joinAndQuit.methods.memberReputation().call()).toBe("100");
-  expect(await joinAndQuit.methods.fundingGoal().call()).toBe("1000");
+  expect(await join.methods.avatar().call()).toBe(avatarAddress);
+  expect(await join.methods.votingMachine().call()).toBe(votingMachine);
+  expect(await join.methods.voteParamsHash().call()).toBe(joinParamsHash);
+  expect(await join.methods.fundingToken().call()).toBe("0x0000000000000000000000000000000000000000");
+  expect(await join.methods.minFeeToJoin().call()).toBe("100");
+  expect(await join.methods.memberReputation().call()).toBe("100");
+  expect(await join.methods.fundingGoal().call()).toBe("1000");
   // instead, we want it far in the future
-  // expect(await joinAndQuit.methods.fundingGoalDeadline().call()).toBe('0');
+  // expect(await join.methods.fundingGoalDeadline().call()).toBe('0');
   
   expect(await fundingRequest.methods.avatar().call()).toBe(avatarAddress);
   expect(await fundingRequest.methods.votingMachine().call()).toBe(votingMachine);
