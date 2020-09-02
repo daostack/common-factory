@@ -49,7 +49,7 @@ const setSchemes = await daoFactory.methods.setSchemes(
     - `DAOFactoryInstance`: The DAOFactory address
     - `avatar`: The address of the Avatar (created by the `forgeOrg` contract call)
     - `votingMachine`: Genesis Protocol address
-    - `fundingToken`: Token address to use in the `JoinAndQuit` and `FundingRequest` schemes (`0x0000000000000000000000000000000000000000` for the native token of the network used)
+    - `fundingToken`: Token address to use in the `Join` and `FundingRequest` schemes (`0x0000000000000000000000000000000000000000` for the native token of the network used)
     - `minFeeToJoin`: Minimum fee to join the Common (wei value)
     - `memberReputation`: Reputation to give to each member joining
     - `goal`: Funding goal of the Common (wei value)

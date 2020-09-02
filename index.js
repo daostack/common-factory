@@ -2,7 +2,7 @@ const ethers = require('ethers');
 // Is the voteParams same for all/some schemes of a common?
 
 // TODO: Edit constants/ Make them function params
-const arcVersion = "0.1.2-rc.2";
+const arcVersion = "0.1.2-rc.6";
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -17,8 +17,7 @@ function getForgeOrgData({
     memberReputation,
     goal,
     deadline,
-    metaData,
-    rageQuitEnabled
+    metaData
 }) {
     let daoTokenABI = require('./abis/DAOToken.json');
 
@@ -47,52 +46,47 @@ function getForgeOrgData({
         ]
     );
 
-    let joinAndQuitABI = require('./abis/JoinAndQuit.json');
+    let joinABI = require('./abis/Join.json');
     let fundingRequestABI = require('./abis/FundingRequest.json');
     let schemeFactoryABI = require('./abis/SchemeFactory.json');
     let dictatorABI = require('./abis/Dictator.json');
     let reputationAdminABI = require('./abis/ReputationAdmin.json');
 
-    let joinAndQuit = new ethers.utils.Interface(joinAndQuitABI);
+    let join = new ethers.utils.Interface(joinABI);
     let fundingRequest = new ethers.utils.Interface(fundingRequestABI);
     let schemeFactory = new ethers.utils.Interface(schemeFactoryABI);
     let dictator = new ethers.utils.Interface(dictatorABI);
     let reputationAdmin = new ethers.utils.Interface(reputationAdminABI);
 
-    let joinAndQuitParams = require('./schemesVoteParams/JoinAndQuitParams.json');
+    let joinParams = require('./schemesVoteParams/JoinParams.json');
     let fundingRequestParams = require('./schemesVoteParams/FundingRequestParams.json');
     let schemeFactoryParams = require('./schemesVoteParams/SchemeFactoryParams.json');
 
-    if (rageQuitEnabled === undefined) {
-        rageQuitEnabled = true;
-    }
-
-    const joinAndQuitArgs = Object.values({
+    const joinArgs = Object.values({
         avatar: NULL_ADDRESS,
         votingMachine,
         votingParams: [
-            joinAndQuitParams.queuedVoteRequiredPercentage,
-            joinAndQuitParams.queuedVotePeriodLimit,
-            joinAndQuitParams.boostedVotePeriodLimit,
-            joinAndQuitParams.preBoostedVotePeriodLimit,
-            joinAndQuitParams.thresholdConst,
-            joinAndQuitParams.quietEndingPeriod,
-            ethers.utils.parseEther(joinAndQuitParams.proposingRepReward.toString()),
-            joinAndQuitParams.votersReputationLossRatio,
-            ethers.utils.parseEther(joinAndQuitParams.minimumDaoBounty.toString()),
-            joinAndQuitParams.daoBountyConst,
-            joinAndQuitParams.activationTime
+            joinParams.queuedVoteRequiredPercentage,
+            joinParams.queuedVotePeriodLimit,
+            joinParams.boostedVotePeriodLimit,
+            joinParams.preBoostedVotePeriodLimit,
+            joinParams.thresholdConst,
+            joinParams.quietEndingPeriod,
+            joinParams.proposingRepReward.toString(),
+            joinParams.votersReputationLossRatio,
+            joinParams.minimumDaoBounty.toString(),
+            joinParams.daoBountyConst,
+            joinParams.activationTime
         ],
-        voteOnBehalf: joinAndQuitParams.voteOnBehalf,
-        joinAndQuitParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+        voteOnBehalf: joinParams.voteOnBehalf,
+        joinParamsHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
         fundingToken,
         minFeeToJoin,
         memberReputation,
         goal,
         // set the funding gaol to 0 and the funding gaol far to the future: this will allow us to call
         // setfundinggaoldeadline() and start creating funding requests as soon as the fundingRequest scheme is active
-        deadline: new Date(2222, 1, 1).getTime() / 1000, 
-        rageQuitEnabled
+        deadline: new Date(2222, 1, 1).getTime() / 1000
     });
 
     const fundingRequestArgs = Object.values({
@@ -105,9 +99,9 @@ function getForgeOrgData({
             fundingRequestParams.preBoostedVotePeriodLimit,
             fundingRequestParams.thresholdConst,
             fundingRequestParams.quietEndingPeriod,
-            ethers.utils.parseEther(fundingRequestParams.proposingRepReward.toString()),
+            fundingRequestParams.proposingRepReward.toString(),
             fundingRequestParams.votersReputationLossRatio,
-            ethers.utils.parseEther(fundingRequestParams.minimumDaoBounty.toString()),
+            fundingRequestParams.minimumDaoBounty.toString(),
             fundingRequestParams.daoBountyConst,
             deadline // this is the activationDate for the funding request
         ],
@@ -126,9 +120,9 @@ function getForgeOrgData({
             schemeFactoryParams.preBoostedVotePeriodLimit,
             schemeFactoryParams.thresholdConst,
             schemeFactoryParams.quietEndingPeriod,
-            ethers.utils.parseEther(schemeFactoryParams.proposingRepReward.toString()),
+            schemeFactoryParams.proposingRepReward.toString(),
             schemeFactoryParams.votersReputationLossRatio,
-            ethers.utils.parseEther(schemeFactoryParams.minimumDaoBounty.toString()),
+            schemeFactoryParams.minimumDaoBounty.toString(),
             schemeFactoryParams.daoBountyConst,
             schemeFactoryParams.activationTime
         ],
@@ -150,7 +144,7 @@ function getForgeOrgData({
         owner: '0xCF8d68F810Cb8E3E228A7F31A61bEf0C1700A7d5'
     });
     
-    var joinAndQuitCallData = joinAndQuit.functions.initialize.encode(joinAndQuitArgs);
+    var joinCallData = join.functions.initialize.encode(joinArgs);
     var fundingRequestCallData = fundingRequest.functions.initialize.encode(fundingRequestArgs);
     var schemeFactoryCallData = schemeFactory.functions.initialize.encode(schemeFactoryArgs);
     var dictatorCallData = dictator.functions.initialize.encode(dictatorArgs);
@@ -160,15 +154,15 @@ function getForgeOrgData({
         ['bytes32[]', 'bytes', 'uint256[]', 'bytes4[]', 'string'],
         [
             [
-                ethers.utils.formatBytes32String('JoinAndQuit'),
+                ethers.utils.formatBytes32String('Join'),
                 ethers.utils.formatBytes32String('FundingRequest'),
                 ethers.utils.formatBytes32String('SchemeFactory'),
                 ethers.utils.formatBytes32String('Dictator'),
                 ethers.utils.formatBytes32String('ReputationAdmin')
             ],
-            concatBytes(concatBytes(concatBytes(concatBytes(joinAndQuitCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData), reputationAdminCallData),
+            concatBytes(concatBytes(concatBytes(concatBytes(joinCallData, fundingRequestCallData), schemeFactoryCallData), dictatorCallData), reputationAdminCallData),
             [
-                getBytesLength(joinAndQuitCallData),
+                getBytesLength(joinCallData),
                 getBytesLength(fundingRequestCallData),
                 getBytesLength(schemeFactoryCallData),
                 getBytesLength(dictatorCallData),
