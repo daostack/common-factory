@@ -42,7 +42,7 @@ function getForgeOrgData({
             founderAddresses,
             tokenDist,
             repDist,
-            [0, 0, getArcVersionNumber(arcVersion)]
+            [0, 1, getArcVersionNumber(arcVersion)]
         ]
     );
 
